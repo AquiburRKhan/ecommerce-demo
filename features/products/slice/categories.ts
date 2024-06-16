@@ -1,24 +1,35 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Product } from "../type";
+import { Category, Product } from "../type";
 
 const categoriesSlice = createSlice({
   name: "categories",
-  initialState: [] as string[],
+  initialState: [] as Category[],
   reducers: {
-    addCategories(state, action: PayloadAction<Product[]>) {
+    addCategories(_, action: PayloadAction<Product[]>) {
       const products = action.payload;
       const categories = products.map((product) => product.category);
       const uniqueCategories = Array.from(new Set(categories));
-      state = [...state, ...uniqueCategories];
+      const newCategories = uniqueCategories.map((category) => ({
+        name: category,
+        checked: false,
+      }));
 
-      return state;
+      return newCategories;
     },
-    clearCategories(state) {
-      state = [];
-      return state;
+    toggleCategory(state, action: PayloadAction<Category>) {
+      const category = state.find(
+        (category) => category.name === action.payload.name
+      );
+      if (category) {
+        category.checked = !category.checked;
+      }
+    },
+    clearCategories() {
+      return [];
     },
   },
 });
 
-export const { addCategories, clearCategories } = categoriesSlice.actions;
+export const { addCategories, toggleCategory, clearCategories } =
+  categoriesSlice.actions;
 export default categoriesSlice.reducer;

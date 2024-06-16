@@ -34,10 +34,10 @@ const Main = ({ products }: { products: Product[] }) => {
       <Container
         sx={{
           paddingTop: "20px",
-          paddingBottom: "20px",
+          paddingBottom: "60px",
         }}
       >
-        <Grid container>
+        <Grid container spacing={2}>
           <Grid xs={4}>
             <ProductsFilter />
           </Grid>

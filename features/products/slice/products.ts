@@ -9,9 +9,8 @@ const productsSlice = createSlice({
       state = [...state, ...action.payload];
       return state;
     },
-    clearProducts(state) {
-      state = [];
-      return state;
+    clearProducts() {
+      return [];
     },
   },
 });
