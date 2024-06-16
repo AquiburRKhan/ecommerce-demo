@@ -19,34 +19,25 @@ import {
   updateLimit,
   updatePage,
 } from "../../slice/pagination";
-import { initializePrices } from "../../slice/prices";
 
 const ProductsList = () => {
   const dispatch = useAppDispatch();
   const pagination = useAppSelector((state) => state.pagination);
   const allProducts = useAppSelector((state) => state.products);
   const categories = useAppSelector((state) => state.categories);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const prices = useAppSelector((state) => state.prices);
+
+  const [filteredProducts, setFilteredProducts] =
+    useState<Product[]>(allProducts);
   const [displayProducts, setDisplayProducts] = useState<Product[]>([]);
 
-  useEffect(() => {
-    // set Products after fetching data
-    if (allProducts.length > 0) {
-      dispatch(initializePagination(allProducts));
-      dispatch(initializePrices(allProducts));
-      setFilteredProducts(allProducts);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allProducts]);
-
-  const filterProducts = () => {
+  const getProductsFilteredByCategory = () => {
     const selectedCategories = categories.filter(
       (category) => category.checked
     );
 
     if (selectedCategories.length === 0) {
-      dispatch(initializePagination(allProducts));
-      setFilteredProducts(allProducts);
+      return allProducts;
     } else {
       const filteredProducts = allProducts.filter((product) =>
         selectedCategories.some(
@@ -54,15 +45,33 @@ const ProductsList = () => {
         )
       );
 
-      dispatch(initializePagination(filteredProducts));
-      setFilteredProducts(filteredProducts);
+      return filteredProducts;
     }
   };
 
+  const getProductsFilteredByPrice = (productsArr: Product[]) => {
+    return productsArr.filter(
+      (product) =>
+        product.price >= prices.selectedMinPrice! &&
+        product.price <= prices.selectedMaxPrice!
+    );
+  };
+
+  const searchAndFilterProducts = () => {
+    const productsFilteredByCategory = getProductsFilteredByCategory();
+
+    const productsFilteredByPrice = getProductsFilteredByPrice(
+      productsFilteredByCategory
+    );
+
+    dispatch(initializePagination(productsFilteredByPrice));
+    setFilteredProducts(productsFilteredByPrice);
+  };
+
   useEffect(() => {
-    filterProducts();
+    searchAndFilterProducts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [categories]);
+  }, [prices, categories]);
 
   const paginateFilteredProducts = () => {
     if (filteredProducts.length > 0) {

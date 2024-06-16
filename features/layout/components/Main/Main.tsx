@@ -13,6 +13,14 @@ import {
   clearCategories,
 } from "@/features/products/slice/categories";
 import ProductsFilter from "@/features/products/components/ProductsFilter/ProductsFilter";
+import {
+  initializePagination,
+  resetPagination,
+} from "@/features/products/slice/pagination";
+import {
+  initializePrices,
+  resetPrices,
+} from "@/features/products/slice/prices";
 
 const Main = ({ products }: { products: Product[] }) => {
   const dispatch = useAppDispatch();
@@ -20,10 +28,14 @@ const Main = ({ products }: { products: Product[] }) => {
   useEffect(() => {
     dispatch(addProducts(products));
     dispatch(addCategories(products));
+    dispatch(initializePagination(products));
+    dispatch(initializePrices(products));
 
     return () => {
       dispatch(clearProducts());
       dispatch(clearCategories());
+      dispatch(resetPagination());
+      dispatch(resetPrices());
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -41,9 +53,7 @@ const Main = ({ products }: { products: Product[] }) => {
           <Grid xs={4}>
             <ProductsFilter />
           </Grid>
-          <Grid xs={8}>
-            <ProductsList />
-          </Grid>
+          <Grid xs={8}>{products.length > 0 ? <ProductsList /> : null}</Grid>
         </Grid>
       </Container>
     </Stack>

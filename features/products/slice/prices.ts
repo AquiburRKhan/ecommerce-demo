@@ -27,12 +27,12 @@ const pricesSlice = createSlice({
         selectedMaxPrice,
       };
     },
-    clearPrices() {
+    resetPrices() {
       return {};
     },
   },
 });
 
-export const { initializePrices, updateSelectedPrices, clearPrices } =
+export const { initializePrices, updateSelectedPrices, resetPrices } =
   pricesSlice.actions;
 export default pricesSlice.reducer;

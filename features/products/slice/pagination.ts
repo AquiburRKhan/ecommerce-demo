@@ -18,6 +18,7 @@ const paginationSlice = createSlice({
         totalItems: action.payload.length,
         numberOfPages: Math.ceil(action.payload.length / state.limit),
       };
+
       return newState;
     },
     updatePage(state, action: PayloadAction<number>) {

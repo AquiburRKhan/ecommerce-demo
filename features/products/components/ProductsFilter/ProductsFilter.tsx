@@ -68,7 +68,7 @@ const ProductsFilter = () => {
                 marginBottom: "5px",
               }}
             >
-              Prices
+              Price Range
             </Typography>
           </Box>
           <Slider
@@ -76,7 +76,7 @@ const ProductsFilter = () => {
               width: "250px",
               marginLeft: "10px",
             }}
-            step={10}
+            step={5}
             value={[
               prices.selectedMinPrice as number,
               prices.selectedMaxPrice as number,
@@ -93,6 +93,7 @@ const ProductsFilter = () => {
             ]}
             min={prices.minPrice as number}
             max={prices.maxPrice as number}
+            valueLabelDisplay="auto"
             onChange={handlePriceChange}
           />
         </Grid>
