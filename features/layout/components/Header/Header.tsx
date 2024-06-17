@@ -1,3 +1,5 @@
+import { setSearchValue } from "@/features/products/slice/search";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import theme from "@/theme";
 import { Search } from "@mui/icons-material";
 import {
@@ -12,6 +14,9 @@ import {
 import Grid from "@mui/material/Unstable_Grid2";
 
 const Header = () => {
+  const dispatch = useAppDispatch();
+  const search = useAppSelector((state) => state.search);
+
   return (
     <Box
       component="header"
@@ -37,6 +42,8 @@ const Header = () => {
             <InputBase
               fullWidth
               placeholder="Search..."
+              value={search}
+              onChange={(e) => dispatch(setSearchValue(e.target.value))}
               sx={{
                 backgroundColor: theme.palette.primary.light,
                 color: theme.palette.primary.contrastText,

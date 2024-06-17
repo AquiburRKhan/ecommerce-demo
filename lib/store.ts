@@ -3,6 +3,8 @@ import productsReducer from "../features/products/slice/products";
 import categoriesReducer from "../features/products/slice/categories";
 import paginationReducer from "../features/products/slice/pagination";
 import pricesReducer from "../features/products/slice/prices";
+import searchReducer from "../features/products/slice/search";
+import ratingsReducer from "../features/products/slice/ratings";
 
 export const makeStore = () => {
   return configureStore({
@@ -11,6 +13,8 @@ export const makeStore = () => {
       categories: categoriesReducer,
       pagination: paginationReducer,
       prices: pricesReducer,
+      search: searchReducer,
+      ratings: ratingsReducer,
     },
   });
 };

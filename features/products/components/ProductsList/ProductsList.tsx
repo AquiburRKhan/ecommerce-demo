@@ -26,20 +26,37 @@ const ProductsList = () => {
   const allProducts = useAppSelector((state) => state.products);
   const categories = useAppSelector((state) => state.categories);
   const prices = useAppSelector((state) => state.prices);
+  const search = useAppSelector((state) => state.search);
+  const ratings = useAppSelector((state) => state.ratings);
 
   const [filteredProducts, setFilteredProducts] =
     useState<Product[]>(allProducts);
   const [displayProducts, setDisplayProducts] = useState<Product[]>([]);
 
-  const getProductsFilteredByCategory = () => {
+  const searchProductsByNameOrDescription = () => {
+    if (search.length > 0) {
+      const searchValue = search.toLowerCase();
+      const filteredProducts = allProducts.filter(
+        (product) =>
+          product.title.toLowerCase().includes(searchValue) ||
+          product.description.toLowerCase().includes(searchValue)
+      );
+
+      return filteredProducts;
+    } else {
+      return allProducts;
+    }
+  };
+
+  const getProductsFilteredByCategory = (productsArr: Product[]) => {
     const selectedCategories = categories.filter(
       (category) => category.checked
     );
 
     if (selectedCategories.length === 0) {
-      return allProducts;
+      return productsArr;
     } else {
-      const filteredProducts = allProducts.filter((product) =>
+      const filteredProducts = productsArr.filter((product) =>
         selectedCategories.some(
           (category) => category.name === product.category
         )
@@ -57,27 +74,46 @@ const ProductsList = () => {
     );
   };
 
+  const getProductsFilteredByRating = (productsArr: Product[]) => {
+    return productsArr.filter(
+      (product) =>
+        product.rating.rate >= ratings.selectedMinRating! &&
+        product.rating.rate <= ratings.selectedMaxRating!
+    );
+  };
+
   const searchAndFilterProducts = () => {
-    const productsFilteredByCategory = getProductsFilteredByCategory();
+    const productsFilteredByNameOrDescription =
+      searchProductsByNameOrDescription();
+
+    const productsFilteredByCategory = getProductsFilteredByCategory(
+      productsFilteredByNameOrDescription
+    );
 
     const productsFilteredByPrice = getProductsFilteredByPrice(
       productsFilteredByCategory
     );
 
-    dispatch(initializePagination(productsFilteredByPrice));
-    setFilteredProducts(productsFilteredByPrice);
+    const productsFilteredByRating = getProductsFilteredByRating(
+      productsFilteredByPrice
+    );
+
+    dispatch(initializePagination(productsFilteredByRating));
+    setFilteredProducts(productsFilteredByRating);
   };
 
   useEffect(() => {
     searchAndFilterProducts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [prices, categories]);
+  }, [search, categories, prices, ratings]);
 
   const paginateFilteredProducts = () => {
     if (filteredProducts.length > 0) {
       const start = (pagination.page - 1) * pagination.limit;
       const end = start + pagination.limit;
       setDisplayProducts(filteredProducts.slice(start, end));
+    } else {
+      setDisplayProducts([]);
     }
   };
 

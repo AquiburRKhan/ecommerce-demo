@@ -5,6 +5,9 @@ export type Product = {
   category: string;
   description: string;
   image: string;
+  rating: {
+    rate: number;
+  };
 };
 
 export type Category = {
@@ -17,4 +20,9 @@ export type Prices = {
   maxPrice?: number;
   selectedMinPrice?: number;
   selectedMaxPrice?: number;
+};
+
+export type Ratings = {
+  selectedMinRating?: number;
+  selectedMaxRating?: number;
 };
