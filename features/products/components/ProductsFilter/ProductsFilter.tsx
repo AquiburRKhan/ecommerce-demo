@@ -90,15 +90,15 @@ const ProductsFilter = () => {
               ]}
               marks={[
                 {
-                  value: prices.minPrice as number,
-                  label: `$${prices.minPrice}`,
+                  value: 0,
+                  label: "$0",
                 },
                 {
                   value: prices.maxPrice as number,
                   label: `$${prices.maxPrice}`,
                 },
               ]}
-              min={prices.minPrice as number}
+              min={0}
               max={prices.maxPrice as number}
               valueLabelDisplay="auto"
               onChange={handlePriceChange}
@@ -131,11 +131,11 @@ const ProductsFilter = () => {
               marks={[
                 {
                   value: 0 as number,
-                  label: "0",
+                  label: "0 ⭐",
                 },
                 {
                   value: 5,
-                  label: "5",
+                  label: "5 ⭐",
                 },
               ]}
               min={0}

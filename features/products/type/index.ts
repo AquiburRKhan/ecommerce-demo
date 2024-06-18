@@ -16,7 +16,6 @@ export type Category = {
 };
 
 export type Prices = {
-  minPrice?: number;
   maxPrice?: number;
   selectedMinPrice?: number;
   selectedMaxPrice?: number;

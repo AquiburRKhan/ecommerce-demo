@@ -1,16 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Card,
-  CardContent,
-  CardMedia,
-  MenuItem,
-  Pagination,
-  Select,
-  Typography,
-} from "@mui/material";
+import { Box, MenuItem, Pagination, Select } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { Product } from "../../type";
@@ -19,6 +10,7 @@ import {
   updateLimit,
   updatePage,
 } from "../../slice/pagination";
+import ProductCard from "../ProductCard/ProductCard";
 
 const ProductsList = () => {
   const dispatch = useAppDispatch();
@@ -129,24 +121,7 @@ const ProductsList = () => {
         <>
           <Grid container spacing={2}>
             {displayProducts.map((product) => (
-              <Grid xs={4} key={product.id}>
-                <Card
-                  sx={{
-                    minHeight: "300px",
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    height="150"
-                    image={product.image}
-                    alt={product.title}
-                  />
-                  <CardContent>
-                    <Typography variant="body2">{product.title}</Typography>
-                    <Typography variant="body2">{product.price}</Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
+              <ProductCard key={product.id} product={product} />
             ))}
           </Grid>
           <Box display="flex" justifyContent="space-between" mt="20px">

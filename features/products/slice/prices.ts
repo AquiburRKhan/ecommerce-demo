@@ -3,18 +3,18 @@ import { Prices, Product } from "../type";
 
 const pricesSlice = createSlice({
   name: "prices",
-  initialState: {} as Prices,
+  initialState: {
+    selectedMinPrice: 0,
+  } as Prices,
   reducers: {
-    initializePrices(_, action: PayloadAction<Product[]>) {
+    initializePrices(state, action: PayloadAction<Product[]>) {
       const products = action.payload;
       const prices = products.map((product) => product.price);
-      const minPrice = Math.floor(Math.min(...prices));
       const maxPrice = Math.ceil(Math.max(...prices));
 
       return {
-        minPrice,
+        ...state,
         maxPrice,
-        selectedMinPrice: minPrice,
         selectedMaxPrice: maxPrice,
       };
     },
@@ -28,7 +28,9 @@ const pricesSlice = createSlice({
       };
     },
     resetPrices() {
-      return {};
+      return {
+        selectedMinPrice: 0,
+      };
     },
   },
 });
