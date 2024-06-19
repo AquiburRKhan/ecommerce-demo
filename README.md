@@ -37,3 +37,7 @@ bun build
 
 - The products list api call is returning all the products.
 - All filtering and search functionalities will occur on the frontend
+
+## Live Demo
+
+- [Demo](https://ecommerce-demo-pi-three.vercel.app)
