@@ -14,7 +14,7 @@ const ProductCard = ({ product }: { product: Product }) => {
 
   return (
     <>
-      <Grid xs={4} key={product.id}>
+      <Grid xs={12} sm={6} lg={4} key={product.id}>
         <Card
           sx={{
             cursor: "pointer",
@@ -23,7 +23,13 @@ const ProductCard = ({ product }: { product: Product }) => {
         >
           <CardMedia
             component="img"
-            height="150"
+            sx={{
+              height: {
+                xs: "250px",
+                sm: "200px",
+                lg: "150px",
+              },
+            }}
             image={product.image}
             alt={product.title}
           />

@@ -12,11 +12,9 @@ import {
   Box,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
+import HeaderSearch from "../HeaderSearch/HeaderSearch";
 
 const Header = () => {
-  const dispatch = useAppDispatch();
-  const search = useAppSelector((state) => state.search);
-
   return (
     <Box
       component="header"
@@ -28,7 +26,7 @@ const Header = () => {
     >
       <Container>
         <Grid container alignItems="center">
-          <Grid xs={3}>
+          <Grid xs={8} sm={6} md={3}>
             <Typography
               variant="body1"
               fontSize="1.3rem"
@@ -38,40 +36,22 @@ const Header = () => {
               E-Commerce
             </Typography>
           </Grid>
-          <Grid xs={6}>
-            <InputBase
-              fullWidth
-              placeholder="Search..."
-              value={search}
-              onChange={(e) => dispatch(setSearchValue(e.target.value))}
-              sx={{
-                backgroundColor: theme.palette.primary.light,
-                color: theme.palette.primary.contrastText,
-                borderRadius: theme.spacing(2),
-                padding: `${theme.spacing(1)} ${theme.spacing(
-                  1
-                )} ${theme.spacing(1)} ${theme.spacing(2)}`,
-                height: "40px",
-              }}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton aria-label="search">
-                    <Search
-                      sx={{
-                        color: theme.palette.primary.contrastText,
-                      }}
-                    />
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
+          <Grid display={{ xs: "none", md: "flex" }} md={6}>
+            <HeaderSearch />
           </Grid>
-          <Grid xs={3} display="flex" justifyContent="flex-end">
+          <Grid xs={4} sm={6} md={3} display="flex" justifyContent="flex-end">
             <Avatar
               alt="User profile picture"
               src="https://www.looper.com/img/gallery/the-ending-of-avatar-finally-explained/intro-1669817126.jpg"
             />
           </Grid>
+        </Grid>
+        <Grid
+          display={{ xs: "flex", md: "none" }}
+          my={theme.spacing(1)}
+          justifyContent="center"
+        >
+          <HeaderSearch />
         </Grid>
       </Container>
     </Box>

@@ -50,10 +50,12 @@ const Main = ({ products }: { products: Product[] }) => {
         }}
       >
         <Grid container spacing={2}>
-          <Grid xs={4}>
+          <Grid xs={12} sm={4}>
             <ProductsFilter />
           </Grid>
-          <Grid xs={8}>{products.length > 0 ? <ProductsList /> : null}</Grid>
+          <Grid xs={12} sm={8}>
+            {products.length > 0 ? <ProductsList /> : null}
+          </Grid>
         </Grid>
       </Container>
     </Stack>
